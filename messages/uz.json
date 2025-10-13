@@ -1,4 +1,11 @@
-
 {
-    "hello" : "salom"
+    "hello": "Salom",
+    "sign_out": "Chiqish",
+    "main": "Asosiy",
+    "create": "Yaratish",
+    "work_space": "Ish joyi",
+    "pricing": "Narxlar",
+    "dashboard": "Boshqaruv",
+    "users": "Foydalanuvchilar",
+    "tests": "Testlar"
 }

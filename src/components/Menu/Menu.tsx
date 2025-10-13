@@ -6,9 +6,11 @@ import logotype from "../../../public/assets/img/elfasatasa.png"
 
 import styles from "./Menu.module.scss"
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 
 export default function Menu() {
     const { data: session, status } = useSession()
+    const t = useTranslations()
 
     return (
         <div>
@@ -20,30 +22,30 @@ export default function Menu() {
                 <menu className={styles.pc__menu}>
                     <ul>
                         <li>
-                            <Link href={"/"}>Main</Link>
+                            <Link href={"/"}>{t("main")}</Link>
                         </li>
                         <li>
-                            <Link href={"/create"}>Create</Link>
+                            <Link href={"/create"}>{t("create")}</Link>
                         </li>
                         <li>
-                            <Link href={"/workspace"}>Work Space</Link>
+                            <Link href={"/workspace"}>{t("work_space")}</Link>
                         </li>
                         <li>
-                            <Link href={"/pricing"}>Pricing</Link>
+                            <Link href={"/pricing"}>{t("pricing")}</Link>
                         </li>
                         {session?.user.role == "admin" ? <>
 
                             <li>
-                                <Link href={"/dashboard"}>Dashboard</Link>
+                                <Link href={"/dashboard"}>{t("dashboard")}</Link>
 
 
                             </li>
                             <li>
-                                <Link href={"/dashboard/tests"}>Tests</Link>
+                                <Link href={"/dashboard/tests"}>{t("tests")}</Link>
 
                             </li>
                             <li>
-                                <Link href={"/dashboard/Users"}>Users</Link>
+                                <Link href={"/dashboard/Users"}>{t("users")}</Link>
                             </li>
                         </> : ""}
                     </ul>

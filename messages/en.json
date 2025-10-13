@@ -1,4 +1,12 @@
 
 {
-    "hello" : "hello"
+    "hello" : "hello",
+    "sign_out": "Sign out",
+    "main": "Main",
+    "create": "Create",
+    "work_space": "Work Space",
+    "pricing": "Pricing",
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "tests": "tests"
 }

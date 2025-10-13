@@ -1,0 +1,29 @@
+
+.title {
+    text-align: center;
+    font-size: var(--fz18);
+    font-weight: var(--fw600);
+    @media screen and (max-width: 576px) {
+        font-size: var(--fz16);
+    }
+}
+
+.services {
+    padding: 4px 0;
+    margin: 0 auto;
+    max-width: 768px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: var(--fw400);
+  
+}
+.price {
+    font-weight: var(--fw500);
+      color: var(--green);
+}
+.getService {
+  text-align: center;
+  color: var(--cyan);
+    font-weight: var(--fw600);
+   
+}
