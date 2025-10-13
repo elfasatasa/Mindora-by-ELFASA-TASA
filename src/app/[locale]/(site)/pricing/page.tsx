@@ -1,9 +1,9 @@
 
-import { useTranslations } from "next-intl"
+
 import styles from "./Pricing.module.scss"
 
 export default function Pricing() {
-    const t = useTranslations()
+  
 
     return (
         <div>

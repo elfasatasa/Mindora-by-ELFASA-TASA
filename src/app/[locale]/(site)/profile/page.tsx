@@ -69,7 +69,7 @@ export default function Profile() {
             <div className={styles.lang__menu}>
               <Link href="/profile" locale="en">English</Link>
               <Link href="/profile" locale="ru">Русский</Link>
-              <Link href="/profile" locale="uz">O'zbek</Link>
+              <Link href="/profile" locale="uz">O&apos;zbek</Link>
             </div>
           )}
         </div>
