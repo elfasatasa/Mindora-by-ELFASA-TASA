@@ -101,7 +101,7 @@ export default function Users() {
     setUserTestsInput("")
   }
 
-  const handleInputChange = (field: keyof IUser, value: any) => {
+  const handleInputChange = (field: keyof IUser, value : string | number) => {
     setEditForm(prev => ({
       ...prev,
       [field]: value
