@@ -1,34 +1,45 @@
 'use client'
 
-import { signIn, useSession } from "next-auth/react"
+import { signIn, signOut, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-
+import $api from "@/hooks/api"
 import styles from "./Register.module.scss"
 
 export default function RegisterPage() {
-  const {  status } = useSession()
+  const { data: session, status } = useSession()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [userSynced, setUserSynced] = useState(false)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-
-    const result = await signIn("google", { redirect: false })
-
-    if (result?.ok) {
-      router.push("/")
-    }
-
+    await signIn("google", { redirect: false })
     setLoading(false)
   }
 
   useEffect(() => {
-    if (status === "authenticated") {
-      router.push("/") 
+    const syncUser = async () => {
+      if (session?.user && !userSynced) {
+        try {
+          await $api.post("/users/create", {
+            name: session.user.name,
+            email: session.user.email,
+          })
+        } catch {
+          console.error("error")
+        } finally {
+          setUserSynced(true)
+          router.push("/")
+        }
+      }
     }
-  }, [status, router]) 
+
+    if (status === "authenticated") {
+      syncUser()
+    }
+  }, [status, session, router, userSynced])
 
   return (
     <div style={{ textAlign: "center", marginTop: 100 }}>
@@ -39,6 +50,8 @@ export default function RegisterPage() {
       >
         {loading ? "Loading..." : "Sign in with Google"}
       </button>
+
+    
     </div>
   )
 }

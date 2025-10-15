@@ -17,7 +17,7 @@ export default function Menu() {
             <br />
             <div className={styles.menu__container}>
                 <div className={styles.logotype}>
-                    <Image src={logotype} alt="elfasa tasa" height={40} width={40} /> &nbsp; <b>Mindora</b>
+                    <Image src={logotype} alt="elfasa tasa" height={40} width={40} /> &nbsp; <div> <div>Mindora</div> <div className={styles.creater}>by ELFASA</div></div>
                 </div>
                 <menu className={styles.pc__menu}>
                     <ul>
@@ -45,7 +45,7 @@ export default function Menu() {
 
                             </li>
                             <li>
-                                <Link href={"/dashboard/Users"}>{t("users")}</Link>
+                                <Link href={"/dashboard/users"}>{t("users")}</Link>
                             </li>
                         </> : ""}
                     </ul>
