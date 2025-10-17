@@ -1,3 +1,4 @@
+// Profile.module.scss
 .user__profile {
   display: flex;
   justify-content: space-between;
@@ -9,17 +10,20 @@
   align-items: center;
   gap: 6px;
   font-weight: var(--fw500);
+}
 
+.btn__wrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .btn {
-
   border: none;
   font-weight: var(--fw600);
   padding: 6px 10px;
   cursor: pointer;
 }
-
 .lang__wrapper {
   position: relative;
   display: inline-block;
@@ -29,7 +33,6 @@
   background: none;
   border: none;
   font-size: 20px;
-
   cursor: pointer;
 }
 
@@ -37,13 +40,10 @@
   position: absolute;
   top: 100%;
   right: 0;
-
-  
   overflow: hidden;
   display: flex;
   flex-direction: column;
   margin-top: 6px;
-
   animation: fadeIn 0.7s ease-in-out;
   z-index: 100;
 }
@@ -51,7 +51,6 @@
 .lang__menu a {
   padding: 8px 12px;
   text-decoration: none;
-
   transition: background 0.2s;
 }
 
@@ -64,7 +63,97 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-
 .user__email {
   font-size: var(--fz14);
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 576px;
+}
+
+.userStatus {
+  margin-bottom: 20px;
+}
+
+.statusContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--gray);
+}
+
+.testsSection {
+  margin-top: 20px;
+}
+
+.testsTitle {
+  font-size: var(--fz18);
+  font-weight: var(--fw600);
+  margin-bottom: 12px;
+  color: var(--white);
+}
+
+.testsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 140px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.testsList::-webkit-scrollbar {
+  width: 4px;
+}
+
+.testsList::-webkit-scrollbar-track {
+  background: var(--black);
+}
+
+.testsList::-webkit-scrollbar-thumb {
+  background: var(--gray);
+  border-radius: 2px;
+}
+
+.testItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.testItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.testText {
+  font-size: var(--fz14);
+  color: var(--white);
+  flex: 1;
+}
+
+.copyBtn {
+  background: none;
+  border: none;
+  color: var(--gray);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copyBtn:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.copyBtn.copied {
+  color: var(--green);
 }

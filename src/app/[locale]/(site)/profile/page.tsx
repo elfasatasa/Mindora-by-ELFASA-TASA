@@ -18,6 +18,7 @@ export default function Profile() {
   const t = useTranslations()
   const [showLangs, setShowLangs] = useState(false)
   const [userData, setUserData] = useState<IUser | null>(null)
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
 
   const langRef = useRef<HTMLDivElement>(null)
 
@@ -27,7 +28,6 @@ export default function Profile() {
     }
   }, [status, router])
 
-  // Получаем данные пользователя из базы по email
   useEffect(() => {
     const fetchUserData = async () => {
       if (!data?.user?.email) return
@@ -37,7 +37,6 @@ export default function Profile() {
           email: data.user.email 
         })
         setUserData(response.data)
-        
       } catch  {
         console.error("Error fetching user data")
       }
@@ -58,12 +57,22 @@ export default function Profile() {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
+  const handleCopy = async (text: string, index: number) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopiedIndex(index)
+      setTimeout(() => setCopiedIndex(null), 2000)
+    } catch (err) {
+      console.error('Failed to copy text: ', err)
+    }
+  }
+
   if (!data?.user) return null
 
   const avatar = data.user.image || "/default-avatar.png"
 
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.user__profile}>
         <div className={styles.user__info}>
           <Image
@@ -101,11 +110,64 @@ export default function Profile() {
       </div>
 
       <br />
+      <div className={styles.userDatas}>
+        <div className={styles.userStatus}>
+          <div className={styles.statusContainer}>
+            <span>Draft</span> <span>{userData?.draft}</span>
+          </div>
+          <div className={styles.statusContainer}>
+            <span>Local</span> <span>{userData?.local}</span>
+          </div>
+          <div className={styles.statusContainer}>
+            <span>Public</span> <span>{userData?.public}</span>
+          </div>
+          <div className={styles.statusContainer}>
+            <span>Private</span> <span>{userData?.private}</span>
+          </div>
+          <div className={styles.statusContainer}>
+            <span>Expire</span> <span>{userData?.expire}</span>
+          </div>
+          <div className={styles.statusContainer}>
+            <span>User add</span> <span>{userData?.users_connect}</span>
+          </div>
+        </div>
+
+        {userData?.user_tests && userData.user_tests.length > 0 && (
+          <div className={styles.testsSection}>
+            <h5 className={styles.testsTitle}>Your Tests</h5>
+            <div className={styles.testsList}>
+              {userData.user_tests.map((test, index) => (
+                <div key={index} className={styles.testItem}>
+                  <span className={styles.testText}>
+                    {test.length > 24 ? `${test.substring(0, 24)}...` : test}
+                  </span>
+                  <button 
+                    className={`${styles.copyBtn} ${copiedIndex === index ? styles.copied : ''}`}
+                    onClick={() => handleCopy(test, index)}
+                  >
+                    {copiedIndex === index ? (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 6L9 17L4 12" stroke="var(--green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    ) : (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" strokeWidth="2"/>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" strokeWidth="2"/>
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
           
- <br />
- <br />
-     
-      <button className={styles.btn} onClick={() => signOut()}>{t("sign_out")}</button>
+      <br />
+     <br />
+   <div className={styles.btn__wrapper}>
+  <button className={styles.btn} onClick={() => signOut()}>{t("sign_out")}</button>
+</div>
     </div>
   )
 }
