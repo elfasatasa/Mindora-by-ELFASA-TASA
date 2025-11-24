@@ -21,12 +21,15 @@ export default function RegisterPage() {
 
   useEffect(() => {
     const syncUser = async () => {
+      
       if (session?.user && !userSynced) {
+    
         try {
-          await $api.post("/users/create", {
+          await $api.post("/users/new-or-old-check", {
             name: session.user.name,
             email: session.user.email,
           })
+        
         } catch {
           console.error("error")
         } finally {

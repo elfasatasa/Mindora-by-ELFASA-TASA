@@ -1,4 +1,4 @@
-
+'use client'
 
 import styles from "./Pricing.module.scss"
 
@@ -66,10 +66,9 @@ export default function Pricing() {
 <br />
 <br />
 <br />
-<br />
-<br />
 
-         <div className={styles.getService}>Buy </div>
+
+         <div  onClick={() => window.open("https://t.me/elfasatasa", "_blank")} className={styles.getService}>Buy </div>
 
         </div>
     )

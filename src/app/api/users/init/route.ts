@@ -13,7 +13,8 @@ export async function GET() {
         private INTEGER DEFAULT 0,
         expire INTEGER DEFAULT 0,
         users_connect INTEGER DEFAULT 0,
-        user_tests TEXT[] DEFAULT '{}'
+        user_tests JSONB DEFAULT '[]',
+      user_favourite_tests TEXT[] DEFAULT '{}' NOT NULL
       );
     `;
     return Response.json({ success: true, message: "users table ready" });

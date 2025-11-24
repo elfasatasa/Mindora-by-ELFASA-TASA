@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import $api from "@/hooks/api"
-import { IUser } from "@/types/users"
+import { IUser, IUserTest } from "@/types/users"
 
 import { Link } from '@/i18n/navigation'
 
@@ -65,6 +65,13 @@ export default function Profile() {
     } catch (err) {
       console.error('Failed to copy text: ', err)
     }
+  }
+
+
+  const truncateText = (text: string, maxLength: number = 24) => {
+    if(!text) return null 
+    if (text.length <= maxLength) return text
+    return `${text.substring(0, maxLength)}...`
   }
 
   if (!data?.user) return null
@@ -131,19 +138,25 @@ export default function Profile() {
             <span>User add</span> <span>{userData?.users_connect}</span>
           </div>
         </div>
-
-        {userData?.user_tests && userData.user_tests.length > 0 && (
+        <br />
+<br />
+        {userData?.user_tests && userData?.user_tests.length > 0 && (
           <div className={styles.testsSection}>
-            <h5 className={styles.testsTitle}>Your Tests</h5>
+            <h6 className={styles.testsTitle}>Your Tests</h6>
+            <br />
             <div className={styles.testsList}>
-              {userData.user_tests.map((test, index) => (
+              {userData.user_tests.map((test: IUserTest, index: number) => (
                 <div key={index} className={styles.testItem}>
-                  <span className={styles.testText}>
-                    {test.length > 24 ? `${test.substring(0, 24)}...` : test}
-                  </span>
+                  <div className={styles.testInfo}>
+                    <span className={styles.testName} title={test.test_name}>
+                      {truncateText(test.test_name)}
+                    </span>
+                    <span className={styles.testId}>ID: {test.test_id}</span>
+                  </div>
                   <button 
                     className={`${styles.copyBtn} ${copiedIndex === index ? styles.copied : ''}`}
-                    onClick={() => handleCopy(test, index)}
+                    onClick={() => handleCopy(test.test_id+"", index)}
+                    title="Copy test name"
                   >
                     {copiedIndex === index ? (
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -165,6 +178,7 @@ export default function Profile() {
           
       <br />
      <br />
+
    <div className={styles.btn__wrapper}>
   <button className={styles.btn} onClick={() => signOut()}>{t("sign_out")}</button>
 </div>

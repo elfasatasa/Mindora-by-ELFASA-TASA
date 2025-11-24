@@ -69,7 +69,7 @@ export default function Menu() {
                     <ul>
                         <li>
                             <Link href={"/"}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 24 24">
                                     <path d="M12 3l8 6v12h-5v-7H9v7H4V9l8-6z" />
                                 </svg>
 
@@ -77,7 +77,7 @@ export default function Menu() {
                         </li>
                         <li>
                             <Link href={"/create"}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 24 24">
                                     <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" />
                                 </svg>
 
@@ -85,7 +85,7 @@ export default function Menu() {
                         </li>
                         <li>
                             <Link href={"/workspace"}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 24 24">
                                     <path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3H3V5zM3 10h18v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7zM7 13h4v4H7v-4zm6 0h4v2h-4v-2z" />
                                 </svg>
                             </Link>
@@ -93,7 +93,7 @@ export default function Menu() {
 
                         <li>
                             <Link href={"/pricing"}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 24 24">
                                     <text x="4" y="18" fontSize="18" fontWeight="bold" fill="white">$</text>
                                 </svg>
 
