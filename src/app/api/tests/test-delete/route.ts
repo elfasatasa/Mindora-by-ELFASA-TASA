@@ -73,8 +73,8 @@ export async function POST(req: Request) {
       }
     });
 
-  } catch (err) {
-    console.error("Delete test error:", err);
+  } catch  {
+    console.error("Delete test error:");
     return NextResponse.json({
       data: {
         success: false,
