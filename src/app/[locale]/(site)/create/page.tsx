@@ -6,28 +6,32 @@ import { ITest } from "@/types/tests"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
-
-import styles from './Create.module.scss'
 import { useRouter } from "next/navigation"
 
+import styles from './Create.module.scss'
+
 export default function Create() {
-   const router = useRouter()
+  const router = useRouter()
   const { data: session, status } = useSession()
   const [userData, setUserData] = useState<IUser>()
   const [userTestName, setUserSetname] = useState<string>("")
   const [userTests, setUserTests] = useState<ITest[]>([])
   const [loading, setLoading] = useState(false)
 
-  if (status === "unauthenticated")
-    return <Link href={"/register"}>Go to Register</Link>
+  // Редирект если не авторизован
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/register")
+    }
+  }, [status, router])
 
   // ------------------------------
   // FETCH USER DATA
   // ------------------------------
   useEffect(() => {
-    const fetchUserData = async () => {
-      if (!session?.user?.email) return
+    if (!session?.user?.email) return
 
+    const fetchUserData = async () => {
       try {
         const res = await $api.post("users/get-with-email", {
           email: session.user.email
@@ -39,8 +43,6 @@ export default function Create() {
     }
 
     const fetchUserTests = async () => {
-      if (!session?.user?.email) return
-
       try {
         const res = await $api.post("tests/get-test-with-email", {
           email: session.user.email
@@ -53,10 +55,8 @@ export default function Create() {
       }
     }
 
-    if (session?.user?.email) {
-      fetchUserData()
-      fetchUserTests()
-    }
+    fetchUserData()
+    fetchUserTests()
   }, [session?.user?.email])
 
   // ------------------------------
@@ -93,9 +93,9 @@ export default function Create() {
   // ------------------------------
   // EDIT TEST
   // ------------------------------
-const edit = async (test_id: string) => {
-  router.push(`/create/${test_id}`)
-}
+  const edit = async (test_id: string) => {
+    router.push(`/create/${test_id}`)
+  }
 
   // ------------------------------
   // DELETE TEST
@@ -115,7 +115,7 @@ const edit = async (test_id: string) => {
 
         // Возвращаем draft +1
         setUserData(prev =>
-          prev ? { ...prev, draft: prev.draft + 1 } : prev
+          prev ? { ...prev, draft: (prev.draft ?? 0) + 1 } : prev
         )
       }
     } catch (err) {
@@ -125,7 +125,7 @@ const edit = async (test_id: string) => {
 
   return (
     <div className={styles.container}>
-      <div>Draft {userData?.draft}</div>
+      <div>Draft {userData?.draft ?? 0}</div>
       <br />
       <div className={styles.userDraft}>
         <input
@@ -136,7 +136,7 @@ const edit = async (test_id: string) => {
           placeholder="Test name..."
         />
         <button
-          disabled={userData?.draft! <= 0 || loading}
+          disabled={(userData?.draft ?? 0) <= 0 || loading}
           onClick={createTest}
         >
           {loading ? "Creating..." : "Create"}
