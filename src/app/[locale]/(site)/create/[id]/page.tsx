@@ -1,11 +1,16 @@
 "use client";
 
+import ChangeStatus from "@/components/Edit/ChangeStatus/ChangeStatus";
+import CorsQuestions from "@/components/Edit/CorsQuestions/CorsQuestions";
 import { ITest } from "@/types/tests";
 import { use, useEffect, useState } from "react";
+
+import styles from "./Test.module.scss"
 
 export default function TestPage({ params }: { params: Promise<{ id: string }> }) {
 
   // Получаем test_id через use()
+  const [state,setState] = useState<boolean>(true)
   const { id: test_id } = use(params);
 
   const [test, setTest] = useState<ITest | null>(null);
@@ -42,8 +47,9 @@ export default function TestPage({ params }: { params: Promise<{ id: string }> }
   if (error) return <div style={{ color: "red" }}>{error}</div>;
   if (!test) return <div>Test not found</div>;
 
+  
   return (
-    <div>
+    <div className={styles.container}>
    
       <div style={{display:"flex",justifyContent:"space-between"}}><p> <b>Name : </b> {test.test_name}</p>
       <p><b>Status :</b> {test.status}</p></div>
@@ -53,8 +59,12 @@ export default function TestPage({ params }: { params: Promise<{ id: string }> }
  <p><b>Expire :</b> {test.expire}</p>
       </div>
 
-            
-     
+            <br />
+          <div style={{display:"flex",justifyContent:"space-between",marginBottom: 10}}>  <button onClick={() => setState(false)}>Revise Status</button>
+            <button onClick={() => setState(true)}>Rescript Questions</button></div>
+     {
+      state ? <CorsQuestions /> : <ChangeStatus test_id={test_id}/>
+     }
 
 
     </div>

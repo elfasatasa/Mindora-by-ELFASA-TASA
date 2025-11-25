@@ -54,18 +54,6 @@ export default function Pricing() {
                 <br />
             </div>
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
 
 
          <div  onClick={() => window.open("https://t.me/elfasatasa", "_blank")} className={styles.getService}>Buy </div>
