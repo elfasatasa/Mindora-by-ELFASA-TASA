@@ -11,7 +11,6 @@ interface ChangeStatusProps {
 }
 
 export default function ChangeStatus({ test_id }: ChangeStatusProps) {
- 
   const [open, setOpen] = useState<"local" | "public" | null>(null);
   const { data, status } = useSession();
   const [userData, setUserData] = useState<IUser | null>(null);
@@ -45,29 +44,32 @@ export default function ChangeStatus({ test_id }: ChangeStatusProps) {
   const changeStatus = async (statusType: "local" | "public") => {
     if (!userData) return;
 
-   confirm(`Are you sure you want to change the test status to ${statusType}?`)
-   {
-     try {
+    if (!confirm(`Are you sure you want to change the test status to ${statusType}?`)) return;
+
+    try {
       const res = await $api.post("tests/change-status", {
         test_id,
         status: statusType,
-        email:userData.email
+        email: userData.email,
       });
 
       if (res.data.success) {
         alert(`Status changed to ${statusType}. Expire: ${res.data.expire}`);
-        // обновляем количество на клиенте
-        setUserData(prev =>
-          prev ? { ...prev, [statusType]: prev[statusType]! - 1 } : prev
-        );
+        // безопасное обновление количества
+        setUserData(prev => {
+          if (!prev) return prev;
+          const newCount = (statusType === "local" ? prev.local : prev.public) - 1;
+          return { ...prev, [statusType]: newCount >= 0 ? newCount : 0 };
+        });
       } else {
         alert(res.data.message || "Error changing status");
       }
     } catch {
       window.location.reload();
     }
-   }
   };
+
+  if (!userData) return null;
 
   return (
     <div>
@@ -83,8 +85,8 @@ export default function ChangeStatus({ test_id }: ChangeStatusProps) {
           <p>This test will be visible only to you. Other users will not be able to access it.</p>
           <p><b>Expire:</b> 30 days</p>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>Quantity {userData?.local}</span>
-            <button disabled={userData?.local! <= 0} onClick={() => changeStatus("local")}>
+            <span>Quantity {userData.local}</span>
+            <button disabled={userData.local <= 0} onClick={() => changeStatus("local")}>
               Change
             </button>
           </div>
@@ -97,8 +99,8 @@ export default function ChangeStatus({ test_id }: ChangeStatusProps) {
           <p>This test will be available to all users on the platform.</p>
           <p><b>Expire:</b> 30 days</p>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>Quantity {userData?.public}</span>
-            <button disabled={userData?.public! <= 0} onClick={() => changeStatus("public")}>
+            <span>Quantity {userData.public}</span>
+            <button disabled={userData.public <= 0} onClick={() => changeStatus("public")}>
               Change
             </button>
           </div>
