@@ -63,7 +63,7 @@ export default function TestPage({ params }: { params: Promise<{ id: string }> }
           <div style={{display:"flex",justifyContent:"space-between",marginBottom: 10}}>  <button onClick={() => setState(false)}>Revise Status</button>
             <button onClick={() => setState(true)}>Rescript Questions</button></div>
      {
-      state ? <CorsQuestions /> : <ChangeStatus test_id={test_id}/>
+      state ? <CorsQuestions  test_id={test_id} questions={test.questions} /> : <ChangeStatus test_id={test_id}/>
      }
 
 

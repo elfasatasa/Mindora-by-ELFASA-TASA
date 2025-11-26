@@ -3,7 +3,7 @@ export interface IQuestions {
     id: number,
     question: string,
     variants: string[],
-    correct_answer: string
+    correct: string
 }
 
 export interface ITest {
