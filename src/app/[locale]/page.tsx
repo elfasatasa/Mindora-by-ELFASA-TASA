@@ -33,8 +33,8 @@ try {
   } else {
     setError(data.message || "Test not found");
   }
-} catch (err) {
-  console.error(err);
+} catch  {
+  
   setError("Server error");
 } finally {
   setLoading(false);

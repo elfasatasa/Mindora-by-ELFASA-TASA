@@ -45,7 +45,8 @@ export default function CorsQuestions({ questions: initialQuestions = [], test_i
       if (!Array.isArray(q.variants)) return `Question #${i + 1}: variants must be an array`;
       if (q.variants.length < 4) return `Question #${i + 1}: need at least 4 variants`;
       if (q.variants.length > 7) return `Question #${i + 1}: max 7 variants allowed`;
-      for (let v of q.variants) if (!v?.trim()) return `Question #${i + 1}: all variants must be non-empty`;
+    for (const v of q.variants) if (!v?.trim()) return `Question #${i + 1}: all variants must be non-empty`;
+
       if (!q.correct?.trim()) return `Question #${i + 1}: correct answer is empty`;
       const matchCount = q.variants.filter(v => v === q.correct).length;
       if (matchCount === 0) return `Question #${i + 1}: correct answer must match one of the variants`;
