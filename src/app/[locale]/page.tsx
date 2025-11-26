@@ -75,14 +75,24 @@ try {
 };
 
 return (
-<div style={{ maxWidth: 576, margin: "0 auto" }}>
-<div style={{ display: "flex", gap: 8 }}>
+<div style={{ maxWidth: 576, margin: "0 auto",display: "flex",justifyContent: "space-between" }}>
+ 
+  
+<div style={{ maxWidth: 576, margin: "0 auto",display: "flex",justifyContent: "space-between"  }}>
 <input
 type="text"
-placeholder="Enter test_id"
+placeholder="Enter test id"
 value={testId}
 onChange={(e) => setTestId(e.target.value)}
-/> <button onClick={handleSearch} disabled={loading}>
+style={{
+  width: 180,
+
+}}
+/> 
+<br />
+&nbsp;
+&nbsp;
+<button onClick={handleSearch} disabled={loading}>
 {loading ? "Searching..." : "Search"} </button> </div>
 
   {error && <div style={{ color: "red", marginTop: 10 }}>{error}</div>}
