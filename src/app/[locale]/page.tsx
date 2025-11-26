@@ -1,12 +1,13 @@
 'use client'
 
+import { ITest } from "@/types/tests";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 export default function Home() {
 const { data: session } = useSession();
 const [testId, setTestId] = useState("");
-const [test, setTest] = useState<any>(null);
+const [test, setTest] = useState<ITest | null>(null);
 const [error, setError] = useState<string | null>(null);
 const [loading, setLoading] = useState(false);
 const [favMessage, setFavMessage] = useState<string | null>(null);
@@ -88,7 +89,7 @@ onChange={(e) => setTestId(e.target.value)}
 
   {test && (
     <div style={{ marginTop: 20, padding: 10, border: "1px solid #ddd", borderRadius: 6 }}>
-      <h3>{test.test_name}</h3>
+    
       <p><strong>Test Name:</strong> {test.test_name}</p>
       <p><strong>User Email:</strong> {test.user_email}</p>
       <p><strong>Expire:</strong> {test.expire}</p>
