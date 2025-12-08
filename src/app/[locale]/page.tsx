@@ -75,10 +75,10 @@ try {
 };
 
 return (
-<div style={{ maxWidth: 576, margin: "0 auto",display: "flex",justifyContent: "space-between" }}>
+<div style={{ maxWidth: 576, margin: "0 auto"}}>
  
   
-<div style={{ maxWidth: 576, margin: "0 auto",display: "flex",justifyContent: "space-between"  }}>
+<div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
 <input
 type="text"
 placeholder="Enter test id"
@@ -94,6 +94,7 @@ style={{
 &nbsp;
 <button onClick={handleSearch} disabled={loading}>
 {loading ? "Searching..." : "Search"} </button> </div>
+<br />
 
   {error && <div style={{ color: "red", marginTop: 10 }}>{error}</div>}
 
@@ -107,6 +108,7 @@ style={{
       <button onClick={handleAddFavourite} disabled={favLoading} style={{ marginTop: 10 }}>
         {favLoading ? "Adding..." : "Add favourite"}
       </button>
+    
       {favMessage && (
         <div style={{ marginTop: 8, color: test.status === "local" ? "red" : "green" }}>
           {favMessage}
