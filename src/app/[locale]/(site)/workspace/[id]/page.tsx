@@ -102,21 +102,33 @@ export default function TestPage({ params }: { params: Promise<{ id: string }> }
         {questionsRun && <strong>Score: {score}</strong>}
       </div>
 
-      {!questionsRun && (
-        <div style={{ border: "1px solid #ffffffff", padding: 12, borderRadius: 8, marginTop: 16 }}>
-          <label>
-            Min 
-            <input type="number" style={{width:70}} value={minCount} onChange={(e) => setMinCount(Number(e.target.value))} />
-          </label>
-          <br />
-          <label>
-            Max 
-            <input type="number" style={{width:70}} value={maxCount} onChange={(e) => setMaxCount(Number(e.target.value))} />
-          </label>
-          <br />
-          <button onClick={startTest} style={{ marginTop: 10 }}>Start Test</button>
-        </div>
-      )}
+   {!questionsRun && (
+  <div style={{ border: "1px solid #ddd", padding: 12, borderRadius: 8, marginTop: 16 }}>
+    <span>Questions Count {test.questions?.length ?? 0}</span>
+    <br />
+    <br />
+    <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
+      <input
+        type="number"
+        style={{ width: 70, marginRight: 8 }}
+        value={minCount}
+        onChange={(e) => setMinCount(Number(e.target.value))}
+      />
+      <span>Min</span>
+    </div>
+    <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
+      <input
+        type="number"
+        style={{ width: 70, marginRight: 8 }}
+        value={maxCount}
+        onChange={(e) => setMaxCount(Number(e.target.value))}
+      />
+      <span>Max</span>
+    </div>
+    <button onClick={startTest} style={{ marginTop: 10 }}>Start Test</button>
+  </div>
+)}
+
 
       {questionsRun && (
         <div>
