@@ -56,25 +56,33 @@ export default function TestPage({ params }: { params: Promise<{ id: string }> }
     }
     return c;
   }
+function startTest() {
+  // Количество вопросов, которое выбрал пользователь
+  const count = Math.min(maxCount, totalQuestions);
+ if (!test) return;
+  // Фильтруем вопросы по ID: берем id от 1 до count
+  const selectedQuestions = test.questions
+    .filter((q) => q.id >= 1 && q.id <= count);
 
-  function startTest() {
-    const count = Math.min(maxCount, totalQuestions);
+  // Перемешиваем выбранные вопросы
+  const shuffled = shuffleArray(selectedQuestions);
 
-    const shuffled = shuffleArray(test?.questions || []).slice(0, count);
+  // Подготавливаем вопросы: перемешиваем варианты и определяем correctIndex
+  const prepared: ShuffledQuestion[] = shuffled.map((q) => {
+    const correctText = resolveCorrectText(q);
+    const shuffledVariants = shuffleArray(q.variants);
+    let correctIndex = shuffledVariants.findIndex((v) => v === correctText);
+    if (correctIndex === -1) correctIndex = 0;
+    return { ...q, shuffledVariants, correctIndex, selected: null, isCorrect: false };
+  });
 
-    const prepared: ShuffledQuestion[] = shuffled.map((q) => {
-      const correctText = resolveCorrectText(q);
-      const shuffledVariants = shuffleArray(q.variants);
-      let correctIndex = shuffledVariants.findIndex((v) => v === correctText);
-      if (correctIndex === -1) correctIndex = 0;
-      return { ...q, shuffledVariants, correctIndex, selected: null, isCorrect: false };
-    });
+  // Сбрасываем состояние теста
+  setQuestionsRun(prepared);
+  setCurrentIdx(0);
+  setAnswerShown(false);
+  setScore(0);
+}
 
-    setQuestionsRun(prepared);
-    setCurrentIdx(0);
-    setAnswerShown(false);
-    setScore(0);
-  }
 
   function selectOption(idx: number) {
     if (!questionsRun) return;
